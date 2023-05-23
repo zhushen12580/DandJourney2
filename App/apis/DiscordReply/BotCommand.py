@@ -20,13 +20,13 @@ class BotCommandCls(Extension):
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    @slash_command(name="dtest", description="DandJourney调试模式")
+    @slash_command(name="dtest", description="DesignBrain调试模式")
     async def dtest(self, ctx: SlashContext, **kwargs):
         await ctx.send("Hello World 1")
 
 
 
-    @slash_command(name="dsettings", description="DandJourney设置")
+    @slash_command(name="dsettings", description="DesignBrain设置")
     async def dsettings(self, ctx: SlashContext, **kwargs):
         VersionComponent = CreateMultipleButtons(ButtonName = ["Fast", "Relax"], 
                                                 styleDic={BotSettings["BotInit"]["Speed"]: 1}, 
@@ -35,21 +35,21 @@ class BotCommandCls(Extension):
         VersionComponent = VersionComponent[1] if VersionComponent[0] else None
         await ctx.send(content = "机器人设置", components = VersionComponent)
 
-    @slash_command(name="dabout", description="关于DandJourney")
+    @slash_command(name="dabout", description="关于DesignBrain")
     async def dabout(self, ctx: SlashContext, **kwargs):
         await ctx.send(embeds = AboutEmb())
 
-    @slash_command(name="dhelp", description="DandJourney帮助手册")
+    @slash_command(name="dhelp", description="DesignBrain帮助手册")
     async def dhelp(self, ctx: SlashContext, **kwargs):
         await ctx.send(embeds = HelpEmb())
 
-    @slash_command(name="dj", description="DandJourney图像生成")
+    @slash_command(name="dj", description="DesignBrain图像生成")
     async def dj(self, ctx: SlashContext, **kwargs):
         pass
 
     @dj.subcommand(
         sub_cmd_name="v4",
-        sub_cmd_description="DandJourney图像生成 For Version 4 版本",
+        sub_cmd_description="DesignBrain图像生成 For Version 4 版本",
         options=PromptCls.MultiplePrompt(BotSettings["BotParam"]["DJPrompt"]["Version4"]),
     )
     async def djv4(self, ctx: SlashContext, prompt:str, no:str = '', image:object = None, **kwargs):
@@ -63,7 +63,7 @@ class BotCommandCls(Extension):
             _channel = BotSettings["BotOpt"]["AGENT_CHANNEL"] if BotSettings["BotOpt"]["AGENT_SIGN"] else ctx.channel.id
             response = PostAgent.Imagine("<#{}> {}".format(_insert[0][1], prompt[1]), channel = _channel)
             if response[0]:
-                await ctx.send("DandJourney接收参数:{}".format(prompt[1]))
+                await ctx.send("DesignBrain接收参数:{}".format(prompt[1]))
             else:
                 await ctx.send(response[1])
         else:
@@ -72,7 +72,7 @@ class BotCommandCls(Extension):
 
     @dj.subcommand(
         sub_cmd_name="v5",
-        sub_cmd_description="DandJourney图像生成 For Version 5 版本",
+        sub_cmd_description="DesignBrain图像生成 For Version 5 版本",
         options=PromptCls.MultiplePrompt(BotSettings["BotParam"]["DJPrompt"]["Version5"]),
     )
     async def djv5(self, ctx: SlashContext, prompt:str, 
@@ -89,7 +89,7 @@ class BotCommandCls(Extension):
             _channel = BotSettings["BotOpt"]["AGENT_CHANNEL"] if BotSettings["BotOpt"]["AGENT_SIGN"] else ctx.channel.id
             response = PostAgent.Imagine("<#{}> {}".format(_insert[0][1], prompt[1]), channel = _channel)
             if response[0]:
-                await ctx.send("DandJourney接收参数:{}".format(prompt[1]))
+                await ctx.send("DesignBrain接收参数:{}".format(prompt[1]))
             else:
                 await ctx.send(response[1])
         else:
@@ -98,7 +98,7 @@ class BotCommandCls(Extension):
 
     @dj.subcommand(
         sub_cmd_name="v5_1",
-        sub_cmd_description="DandJourney图像生成 For Version 5.1 版本",
+        sub_cmd_description="DesignBrain图像生成 For Version 5.1 版本",
         options=PromptCls.MultiplePrompt(BotSettings["BotParam"]["DJPrompt"]["Version5.1"]),
     )
     async def djv51(self, ctx: SlashContext, prompt:str, 
@@ -115,14 +115,14 @@ class BotCommandCls(Extension):
             _channel = BotSettings["BotOpt"]["AGENT_CHANNEL"] if BotSettings["BotOpt"]["AGENT_SIGN"] else ctx.channel.id
             response = PostAgent.Imagine("<#{}> {}".format(_insert[0][1], prompt[1]), channel = _channel)
             if response[0]:
-                await ctx.send("DandJourney接收参数:{}".format(prompt[1]))
+                await ctx.send("DesignBrain接收参数:{}".format(prompt[1]))
             else:
                 await ctx.send(response[1])
         else:
             SystemQueue.delete_queue_value(DQueueID, _insert[0][1])
             await ctx.send(prompt[1])
 
-    @slash_command(name="dblend", description="DandJourney图像混合", options=PromptCls.MultiplePrompt(BotSettings["BotParam"]["DBlendPrompt"]))
+    @slash_command(name="dblend", description="DesignBrain图像混合", options=PromptCls.MultiplePrompt(BotSettings["BotParam"]["DBlendPrompt"]))
     async def dblend(self, ctx: SlashContext,
                     image1: object, 
                     image2:object, 
@@ -132,30 +132,30 @@ class BotCommandCls(Extension):
                     dimensions:str = "--ar 1:1",
                     **kwargs):
         ChannelSwitch(ctx)
-        saveImg = await ctx.send("DandJourney正在转存图片...")
+        saveImg = await ctx.send("DesignBrain正在转存图片...")
 
         _insert = SystemQueue.insert_queue(DQueueID,{"User":ctx.author_id, "Channel":ctx.channel_id, "Mode":"UV"})
         _channel = BotSettings["BotOpt"]["AGENT_CHANNEL"] if BotSettings["BotOpt"]["AGENT_SIGN"] else ctx.channel.id
         
         response = PostAgent.Blend([image1, image2, image3, image4, image5], dimensions, _insert[0][1], channel=_channel)
         if response[0]:
-            await ctx.edit(message = saveImg.id, content = "DandJourney正在生成混合图片...")
+            await ctx.edit(message = saveImg.id, content = "DesignBrain正在生成混合图片...")
         else:
             await ctx.edit(message = saveImg.id, content = response[1])
 
-    @slash_command(name="ddescribe", description="DandJourney图像描述", options=PromptCls.SinglePrompt(BotSettings["BotParam"]["DDescribePrompt"]))
+    @slash_command(name="ddescribe", description="DesignBrain图像描述", options=PromptCls.SinglePrompt(BotSettings["BotParam"]["DDescribePrompt"]))
     async def ddescribe(self, ctx: SlashContext,
                     image: object, 
                     **kwargs):
         ChannelSwitch(ctx)
-        saveImg = await ctx.send("DandJourney正在转存图片...")
+        saveImg = await ctx.send("DesignBrain正在转存图片...")
 
         _insert = SystemQueue.insert_queue(DQueueFQID,{"User":ctx.author_id, "Channel":ctx.channel_id, "Mode":"DC", "Image": image.__getattribute__("url")})
         _channel = BotSettings["BotOpt"]["AGENT_CHANNEL"] if BotSettings["BotOpt"]["AGENT_SIGN"] else ctx.channel.id
 
         response = PostAgent.Describe(image, _insert[0][1], channel=_channel)
         if response[0]:
-            await ctx.edit(message = saveImg.id, content = "DandJourney正在生成描述...")
+            await ctx.edit(message = saveImg.id, content = "DesignBrain正在生成描述...")
         else:
             await ctx.edit(message = saveImg.id, content = response[1])
 
