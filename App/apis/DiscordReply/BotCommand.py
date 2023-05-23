@@ -43,7 +43,7 @@ class BotCommandCls(Extension):
     async def dhelp(self, ctx: SlashContext, **kwargs):
         await ctx.send(embeds = HelpEmb())
 
-    @slash_command(name="dj", description="DesignBrain图像生成")
+    @slash_command(name="db", description="DesignBrain图像生成")
     async def dj(self, ctx: SlashContext, **kwargs):
         pass
 
