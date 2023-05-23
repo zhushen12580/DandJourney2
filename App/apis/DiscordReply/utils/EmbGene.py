@@ -3,7 +3,7 @@ from . import interactions, BotSettings
 import re
 
 def AboutEmb():
-    embed = interactions.Embed(title = "*****DesignBrain*****", description = 'AI辅助专业设计机器人', color=0x00ff00, url='https://designbrain.top'])
+    embed = interactions.Embed(title = "*****DesignBrain*****", description = 'AI辅助专业设计机器人', color=0x00ff00, url='https://designbrain.top')
     embed.set_image('https://opengraph.githubassets.com/70433925c505ce837dda9bab06af0101f3ac5b592acc6763a52b04b9ef059142/yuexdang/DandJourney')
     embed.add_field(name = '——'*15, value = " ", inline = False)
     embed.add_field(name = '当前机器人名称', value = BotSettings["BotInfo"]["Name"], inline = True)
