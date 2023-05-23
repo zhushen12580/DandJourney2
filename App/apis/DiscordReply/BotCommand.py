@@ -22,7 +22,7 @@ class BotCommandCls(Extension):
 
     @slash_command(name="dtest", description="DesignBrain调试模式")
     async def dtest(self, ctx: SlashContext, **kwargs):
-        await ctx.send("Hello World 1")
+        await ctx.send("AI设计大脑")
 
 
 
